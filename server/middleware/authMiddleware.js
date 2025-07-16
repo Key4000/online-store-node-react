@@ -5,8 +5,7 @@
 //  То есть валидный ли токен
 
 // *****************************************
-
-const jwt = require('jsonwebtoken')
+const checkToken = require('./helpers/checkToken')
 
 module.exports = function(req, res, next){
     //оставляем только методы POST, GET, PUT
@@ -14,17 +13,12 @@ module.exports = function(req, res, next){
         next()
     }
     try{
-       //в хедер помещают, сначала тип токена, а потом сам токен поэтому через сплит, мы сначала отделяем токен от типа, и выбераем токен 
-       const token = req.headers.authorization.split(' ')[1]// Bearer nametoken
-       //если токена нету отправляем ошибку
-       if(!token){
-           return res.status(401).json({message: 'Не авторизован'})
-       }
+        //проаеряем токен на валидность
+       const decoded = checkToken(req, res)
        
-       //проверяем токен на валидность
-       let decoded = jwt.verify(token, process.env.SECRET_KEY)
        //добавим данные из токена
        req.user = decoded
+       //переход к следующему middleware 
        next()
     } catch(e) {
         //отправляем ошибку 

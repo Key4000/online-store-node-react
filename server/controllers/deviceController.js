@@ -16,7 +16,8 @@ const { Device, DeviceInfo } = require('../models/models')
 const ApiError = require('../error/ApiError')
 
 class DeviceController {
-    //создание девайса
+
+//--—-----------создание девайса------------
     async create(req, res, next) {
         try {
             //вытаскиваем из тела запроса:
@@ -52,7 +53,7 @@ class DeviceController {
 
     }
 
-    //получение всех девайсов 
+//------------получение всех девайсов-----
     async getAll(req, res) {
         //из тела запроса 
         let { brandId, typeId, limit, page } = req.query
@@ -77,7 +78,7 @@ class DeviceController {
         return res.json(devices)
     }
 
-    //получение одного девайса
+//------------получение одного девайса-----
     async getOne(req, res) {
         const { id } = req.params
         const device = await Device.findOne(
@@ -89,8 +90,18 @@ class DeviceController {
         )
 
         return res.json(device)
-
     }
+//------------удаление одного девайса-----.-
+    async deleteOne(req, res){
+        const { id } = req.params
+        
+        await Device.destroy({
+          where: { id },
+        });
+        
+        return res.json({id})
+     }
+
 }
 
 module.exports = new DeviceController()

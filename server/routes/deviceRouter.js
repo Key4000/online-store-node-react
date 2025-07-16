@@ -8,6 +8,8 @@ router.post('/', deviceController.create)
 router.get('/', deviceController.getAll)
 //получение отдельно взятого девайса по id
 router.get('/:id', deviceController.getOne)
+//удаление отдельно взятого девайса по id 
+router.delete('/:id', deviceController.deleteOne)
 
 
 module.exports = router
