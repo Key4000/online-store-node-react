@@ -4,9 +4,9 @@ const ratingController = require('../controllers/ratingController')
 
 
 //получение всех рейтингов по девайсу
-router.get('/', ratingController.getAllDevice)
+router.get('/device', ratingController.getAllDevice)
 //получение всех рейтингов юзера 
-router.get('/', ratingController.getAllUser)
+router.get('/user', ratingController.getAllUser)
 //получение одного рейтинга по id 
 router.get('/:id', ratingController.getOne)
 //создание рейтинга
