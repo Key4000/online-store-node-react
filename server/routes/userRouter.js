@@ -14,6 +14,8 @@ router.post('/registration', userController.registration)
 router.post('/login', userController.login)
 //проверка авторизации пользователя
 router.get('/auth', authMiddleware, userController.check)
+//удаление пользователя
+router.delete('/:id', userController.deleteUser)
 
 
 module.exports = router

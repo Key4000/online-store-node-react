@@ -10,7 +10,7 @@
 //****************************************************
 const ApiError = require('../error/ApiError')
 const bcrypt = require('bcrypt')
-const { User, Basket } = require('../models/models')
+const { User, Basket, Rating } = require('../models/models')
 const jwt = require('jsonwebtoken')
 
 
@@ -84,7 +84,27 @@ class UserController {
         return res.json({token})
     }
 
-
+    //удаление пользователя(за собой тянет - удаление корзины и рейтинга)
+    async deleteUser(req, res){
+        const { id } = req.params
+        const userId = id
+        User.destroy({
+            where: {
+                id
+            }
+        })
+        Basket.destroy({
+            where: {
+                userId
+            }
+        })
+        Rating.destroy({
+            where: {
+                userId
+            }
+        })
+        return res.json("Succesfull")
+    }
 
 }
 
